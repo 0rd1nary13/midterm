@@ -1,5 +1,5 @@
 # This program is written by team: Stack under flow
-# Feb 5th, 2024
+# Feb 9th, 2024
 
 
 class FoodItems:
@@ -52,7 +52,9 @@ class Customer:
                 total += foodItem.item_total()
         except:
             print("No items ordered, thank you for using our service.")
-        print("Total: ", total)
+        if not self.is_student:
+            total = total * 1.09
+        print("Total: ", round(total, 2))
 
     def get_input(self):
         foodItems = []
@@ -73,9 +75,6 @@ class Customer:
             if choice == 'n':
                 break
         return foodItems
-
-
-
 
 
 def main():

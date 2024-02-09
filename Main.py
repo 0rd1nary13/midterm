@@ -3,15 +3,28 @@
 
 
 class FoodItems:
-    def __init__(self, name, price, id):
+    def __init__(self, name, price, item_id, quantity):
+        self.quantity = quantity
         self.name = name
         self.price = price
-        self.id = id
+        self.id = item_id
 
     def display(self):
         print("Name: ", self.name)
         print("Price: ", self.price)
         print("Number of selection: ", self.id)
+
+    def item_total(self):
+        return self.price * self.quantity
+
+
+def print_bill(foodItems):
+    total = 0
+    print("Bill")
+    for foodItem in foodItems:
+        print(foodItem.name, " ", foodItem.price, " ", foodItem.quantity, " ", foodItem.item_total())
+        total += foodItem.item_total()
+    print("Total: ", total)
 
 
 class FoodCourt:
@@ -20,50 +33,50 @@ class FoodCourt:
         self.foodItems = foodItems
 
     def show_menu(self):
-        print("Food Court Name: ", self.name)
+        print("Welcome to ", self.name)
         for foodItem in self.foodItems:
             foodItem.display()
-            print("")
+
+
+class Customer:
+    def __init__(self, is_student, foodItems):
+        self.is_student = False
+        self.foodItems = foodItems
+
+    def print_bill(self):
+        total = 0
+        print("Bill")
+        for foodItem in self.foodItems:
+            print(foodItem.name, " ", foodItem.price, " ", foodItem.quantity, " ", foodItem.item_total())
+            total += foodItem.item_total()
+        print("Total: ", total)
 
     def get_input(self):
         foodItems = []
         while True:
             print("Enter the food item number: ")
-            id = int(input())
+            item_id = int(input())
             print("Enter the quantity: ")
             quantity = int(input())
-            foodItems.append(FoodItems(self.foodItems[id-1].name, self.foodItems[id-1].price, quantity))
+            foodItems.append(FoodItems(self.foodItems[item_id - 1].name, self.foodItems[item_id - 1].price, quantity))
             print("Do you want to add more items? (y/n)")
             choice = input()
             if choice == 'n':
                 break
         return foodItems
 
-   def compute_bill(self, foodItems):
-        total = 0
-        for foodItem in foodItems:
-            total += foodItem.price*foodItem.id
-        return total
 
-    def print_bill(self, foodItems):
-        print("Food Court Name: ", self.name)
-        for foodItem in foodItems:
-            foodItem.display()
-            print("")
-        print("Total Bill: ", FoodCourt.compute_bill(self, foodItems))
 def main():
     DeAnza = FoodCourt("De Anza Food Court",
-              [FoodItems("De Anza Burger", 5.25, 1),
-               FoodItems("Bacon Cheese", 5.75, 2),
-               FoodItems("Mushroom Swiss", 5.95, 3),
-               FoodItems("Western Burger", 5.95, 4),
-               FoodItems("Don Cali Burger", 5.95, 5), ])
-    #display the menu
-    FoodCourt.show_menu(DeAnza)
-    #get the input from the user
-    foodItems = FoodCourt.get_input(DeAnza)
-    #print the bill
-    FoodCourt.print_bill(DeAnza, foodItems)
-
+                       [FoodItems("De Anza Burger", 5.25, 1, 0),
+                        FoodItems("Bacon Cheese", 5.75, 2, 0),
+                        FoodItems("Mushroom Swiss", 5.95, 3, 0),
+                        FoodItems("Western Burger", 5.95, 4, 0),
+                        FoodItems("Don Cali Burger", 5.95, 5, 0), ])
+    DeAnza.show_menu()
+    customer = Customer(False, DeAnza.foodItems)
+    foodItems = customer.get_input()
+    print_bill(foodItems)
+    
 
 main()

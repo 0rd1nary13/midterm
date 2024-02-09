@@ -58,7 +58,10 @@ class Customer:
             item_id = int(input())
             print("Enter the quantity: ")
             quantity = int(input())
-            foodItems.append(FoodItems(self.foodItems[item_id - 1].name, self.foodItems[item_id - 1].price, quantity))
+            for foodItem in self.foodItems:
+                if foodItem.id == item_id:
+                    foodItem.quantity = quantity
+                    foodItems.append(foodItem)
             print("Do you want to add more items? (y/n)")
             choice = input()
             if choice == 'n':
@@ -75,8 +78,8 @@ def main():
                         FoodItems("Don Cali Burger", 5.95, 5, 0), ])
     DeAnza.show_menu()
     customer = Customer(False, DeAnza.foodItems)
-    foodItems = customer.get_input()
-    print_bill(foodItems)
-    
+    customer.get_input()
+    customer.print_bill()
+
 
 main()

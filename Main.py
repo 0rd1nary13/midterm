@@ -210,4 +210,70 @@ class Order:
             file.write(f"Tax Amount: ${self._total_tax:.2f}\n")
             file.write(f"Total price after tax: ${self._price_after_tax:.2f}\n")
 
+from Order import Order
+from person import Student, Staff
+from burgers import DeAnzaBurger, BaconCheese, MushroomSwiss, WesternBurger, DonCaliBurger
+
+def main():
+    flag = True
+
+    while flag:
+        order = Order()
+        order.display_menu()
+        order.get_input()  # Note the correction to match the method name
+        order.calculate()
+        order.print_bill()
+        order.save_to_file()
+        
+        user_input_to_continue = input("Continue for another order (Any key=Yes, n=No)? ").strip().lower()
+
+        if user_input_to_continue == 'n':
+            print("The system is shutting down!")
+            flag = False
+
+if __name__ == "__main__":
+    main()
+
+class Student:
+    def __init__(self):
+        super().__init__()
+        self.tax_rate = 0 
+    def get_tax_rate(self):
+        return self.tax_rate
+
+class Staff:
+    def __init__(self):
+        super().__init__()
+        self.tax_rate = 0.09
+    def get_tax_rate(self):
+        return self.tax_rate
+
+class Burger:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+    def display(self):
+        print(f"{self.name}: ${self.price}")
+
+class DeAnzaBurger(Burger):
+    def __init__(self):
+        super().__init__("De Anza Burger", 5.25)
+
+class BaconCheese(Burger):
+    def __init__(self):
+        super().__init__("Bacon Cheese", 5.75)
+
+class MushroomSwiss(Burger):
+    def __init__(self):
+        super().__init__("Mushroom Swiss", 5.95)
+
+class WesternBurger(Burger):
+    def __init__(self):
+        super().__init__("Western Burger", 5.95)
+
+class DonCaliBurger(Burger):
+    def __init__(self):
+        super().__init__("Don Cali Burger", 5.95)
+
 '''
